@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.7.3</version>
+    <relativePath />
+  </parent>
+
+  <groupId>cz.pwf.filenet</groupId>
+  <artifactId>specification</artifactId>
+  <version>2.2.1-SNAPSHOT</version>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>11</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <pwf-ecm-filenet-api-client.name>pwf-ecm-filenet-api-client</pwf-ecm-filenet-api-client.name>
+
+    <springfox-version>3.0.0</springfox-version>
+    <swagger-annotations-version>1.6.6</swagger-annotations-version>
+    <jackson-databind-nullable.version>0.2.3</jackson-databind-nullable.version>
+    <jsr305.version>3.0.2</jsr305.version>
+    <log4j2.version>2.18.0</log4j2.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <version>${springfox-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <version>${springfox-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>${swagger-annotations-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openapitools</groupId>
+      <artifactId>jackson-databind-nullable</artifactId>
+      <version>${jackson-databind-nullable.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>${jsr305.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <version>4.3.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/src/main/resources/server/swagger.yml</inputSpec>
+              <generatorName>spring</generatorName>
+              <configOptions>
+                <basePackage>cz.pwf.filenet</basePackage>
+                <configPackage>cz.pwf.filenet.config</configPackage>
+                <apiPackage>cz.pwf.filenet.controller</apiPackage>
+                <modelPackage>cz.pwf.filenet.model</modelPackage>
+                <delegatePattern>false</delegatePattern>
+                <swaggerDocketConfig>false</swaggerDocketConfig>
+                <useOptional>true</useOptional>
+                <returnSuccessCode>true</returnSuccessCode>
+                <useTags>true</useTags>
+                <virtualService>false</virtualService>
+                <dateLibrary>java8</dateLibrary>
+                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                <interfaceOnly>true</interfaceOnly>
+                <skipDefaultInterface>true</skipDefaultInterface>
+              </configOptions>
+            </configuration>
+          </execution>
+          <execution>
+            <id>java-api</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/src/main/resources/client/swagger.yml</inputSpec>
+              <generatorName>java</generatorName>
+              <library>resttemplate</library>
+              <generateApiTests>false</generateApiTests>
+              <generateModelTests>false</generateModelTests>
+              <configOptions>
+                <artifactVersion>${project.version}</artifactVersion>
+                <artifactId>${pwf-ecm-filenet-api-client.name}</artifactId>
+                <groupId>${project.groupId}</groupId>
+                <dateLibrary>java8</dateLibrary>
+              </configOptions>
+              <apiPackage>${project.groupId}.${pwf-ecm-filenet-api-client.name}.handler</apiPackage>
+              <modelPackage>${project.groupId}.${pwf-ecm-filenet-api-client.name}.model</modelPackage>
+              <invokerPackage>${project.groupId}.${pwf-ecm-filenet-api-client.name}.handler</invokerPackage>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

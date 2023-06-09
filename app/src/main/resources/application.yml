@@ -1,0 +1,39 @@
+rest.client.pwf_ods_whisperers.url: ""
+
+filenet:
+  namespace: "***.Document"
+
+pwf:
+  endpoints:
+    token-verification: "/service/api/client/rest/token/verify"
+
+app:
+  version: '@project.version@'
+
+zeebe:
+  client:
+    broker:
+      contactPoint: "127.0.0.1:26500"
+    worker:
+      defaultName: "document-worker"
+    security:
+      enabled: false
+      plaintext: true
+
+# Document plugin cache
+spring:
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    table: dc_flyway_schema_history
+    locations: classpath:db/migration/{vendor}
+  datasource:
+    url: jdbc:postgresql://db:5432/powerflow
+    username: pf
+    password: password
+  quartz.job-store-type: memory
+
+documentCache:
+  cleanUp:
+    cron.timer: "0 0 0 ? * * *"
+    ttl.minutes: 1440

@@ -1,0 +1,11 @@
+rest.client.pwf_ecm_filenet:
+  url: ""
+  username: ""
+  password: ""
+
+logging:
+  level:
+    cz.pwf.filenet.service: DEBUG
+
+pwf:
+  base-url: ""

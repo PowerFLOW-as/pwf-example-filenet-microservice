@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+cz.notix.document.plugin.configuration.DmsOperationsConfiguration,\
+cz.notix.document.plugin.zeebe.ZeebeConfiguration,\
+cz.notix.document.plugin.configuration.PreviewConfiguration,\
+cz.notix.document.plugin.configuration.DocumentPluginConfiguration
